@@ -1,0 +1,10 @@
+// Last updated: 2/6/2026, 10:45:19 AM
+class Solution {
+    public int sumOfMultiples(int n) {
+        int m = 0;
+        for(int i = 1;i<=n;i++){
+            if(i%3==0 || i%5==0 || i%7==0 )  m+=i;
+        }
+        return m;
+    }
+}

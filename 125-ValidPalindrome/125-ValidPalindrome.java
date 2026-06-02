@@ -1,15 +1,15 @@
-// Last updated: 6/2/2026, 8:28:39 PM
-class Solution {
-    public boolean isPalindrome(String s) {
-        s = s.toLowerCase().replaceAll("[^A-Za-z0-9]","");
-        int i=0,j=s.length()-1;
-        while(i<=j){
-            if(s.charAt(i) != s.charAt(j)){
-                return false;
-            }
-            i++;
-            j--;
-        }
-        return true;
-    }
-}
+// Last updated: 6/2/2026, 8:41:54 PM
+1class Solution {
+2    public int lengthOfLastWord(String s) {
+3        int i = s.length() - 1;
+4        while (i >= 0 && s.charAt(i) == ' ') {
+5            i--;
+6        }
+7        int end = i;
+8        while (i >= 0 && s.charAt(i) != ' ') {
+9            i--;
+10        }
+11
+12        return end - i;
+13    }
+14}

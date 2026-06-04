@@ -1,14 +1,16 @@
-// Last updated: 6/4/2026, 3:55:16 PM
+// Last updated: 6/4/2026, 4:14:32 PM
 1class Solution {
-2    public int climbStairs(int n) {
-3      int a =1,b=1,c=0;
-4      if(n<=2) return n;
-5      for(int i =0;i<n-1;i++){
-6        c = a+b;
-7        a=b;
-8        b=c;
-9      }
-10      return c;
-11    }
-12}
-13        
+2    public int tribonacci(int n) {
+3        int a = 0,b=1,c=1,d=0;  
+4        if(n==0) return 0; 
+5        if(n<=2) return 1;
+6        for(int i =0;i<n-2;i++){
+7            d = a+b;
+8            d+=c;
+9            a = b;
+10            b =c;
+11            c =d;
+12        }
+13        return d;
+14    }
+15}

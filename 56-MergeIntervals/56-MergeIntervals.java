@@ -1,4 +1,4 @@
-// Last updated: 6/4/2026, 1:47:22 PM
+// Last updated: 6/4/2026, 1:50:36 PM
 1class Solution {
 2    public int[][] merge(int[][] intervals) {
 3     Arrays.sort(intervals,(a,b)->a[0]-b[0]);

@@ -1,4 +1,4 @@
-// Last updated: 6/11/2026, 9:26:56 AM
+// Last updated: 6/11/2026, 9:32:02 AM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -16,16 +16,7 @@
 15 */
 16class Solution {
 17    public int countNodes(TreeNode root) {
-18        List<Integer> arr = new ArrayList<>();
-19        Preorder(root,arr);
-20        return arr.size();
-21    }
-22    void Preorder(TreeNode root, List<Integer> arr){
-23        if(root == null) return;
-24        arr.add(root.val);
-25        Preorder(root.left,arr);
-26        Preorder(root.right,arr);
-27    }
-28        
-29    }
-30
+18        if(root==null) return 0;
+19        return 1+(countNodes(root.left)+countNodes(root.right));
+20    }
+21}

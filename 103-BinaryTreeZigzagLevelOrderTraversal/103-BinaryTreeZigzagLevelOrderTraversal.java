@@ -1,4 +1,4 @@
-// Last updated: 6/11/2026, 2:04:12 PM
+// Last updated: 6/11/2026, 3:41:20 PM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -15,34 +15,29 @@
 14 * }
 15 */
 16class Solution {
-17    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-18        List<List<Integer>> ans = new ArrayList<>();
+17    public List<Integer> rightSideView(TreeNode root) {
+18        List<Integer> ans = new ArrayList<>();
 19        if(root == null) return ans;
 20        Queue<TreeNode> q = new LinkedList<>();
 21        q.add(root);
-22        boolean isLeftToRight = true;
-23         while(!q.isEmpty()){
-24            int s = q.size();
-25            List<Integer> temp = new ArrayList<>();
-26            
-27            for(int i=0;i<s;i++){
-28                TreeNode t = q.poll();
-29                  if(isLeftToRight ==true ) {
-30                    temp.add(t.val);
-31                }
-32                else{
-33                    temp.add(0,t.val);
-34                }
-35                if(t.left!=null) q.add(t.left);
-36                if(t.right!=null)q.add(t.right);
-37    
-38            }
-39            ans.add(temp);
-40            isLeftToRight = !isLeftToRight;
-41        }
-42         return ans;
-43    }
-44}
-45
-46        
-47    
+22        while(!q.isEmpty()){
+23            int s = q.size();
+24         
+25            for(int i=0;i<s;i++){
+26                TreeNode t = q.remove();
+27                if(i==s-1){
+28                    ans.add(t.val);
+29                }
+30                if(t.left!=null){
+31                    q.add(t.left);
+32                }
+33                 if(t.right!=null){
+34                    q.add(t.right);
+35                }
+36              
+37            }
+38            
+39        }
+40        return ans;
+41    }
+42}

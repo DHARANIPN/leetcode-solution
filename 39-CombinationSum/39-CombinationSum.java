@@ -1,32 +1,20 @@
-// Last updated: 6/12/2026, 11:41:41 AM
+// Last updated: 6/12/2026, 2:42:58 PM
 1class Solution {
-2    public List<List<Integer>> combinationSum2(int[] c, int t) {
+2    public List<List<Integer>> subsets(int[] nums) {
 3        List<List<Integer>> ans = new ArrayList<>();
-4        Arrays.sort(c);
-5        List<Integer> temp = new ArrayList<>();
-6        method(ans,c,t,temp,0);
-7        return ans;
-8    }
-9    void method(List<List<Integer>> ans,int []c ,int t ,List<Integer> temp,int s){
-10        if(t == 0 ) {
-11            if(!ans.contains(temp))
-12            ans.add(new ArrayList<>(temp));
-13        return;
-14        }
-15        if(t<0) return;
-16        for(int i = s;i<c.length;i++){
-17            // if ( c[i] != c[i - 1]) {
-18            if (i > s && c[i] == c[i - 1]) {
-19                continue;
-20            }
-21           
-22            
-23            temp.add(c[i]);
-24            method(ans,c,t-c[i],temp,i+1);
-25            temp.remove(temp.size()-1);
-26            
-27        
-28        
-29    }
-30}
-31}
+4        //  Arrays.sort(nums);
+5        bt(ans,new ArrayList<>(),nums,0);
+6        return ans;
+7    }
+8    void bt(List<List<Integer>> ans,List<Integer> temp,int[] nums,int s){
+9         ans.add(new ArrayList<>(temp));
+10        for(int i = s; i < nums.length; i++){
+11            temp.add(nums[i]);
+12            bt(ans,temp,nums,i+1);
+13            temp.remove(temp.size()-1);
+14       }
+15    }
+16}
+17
+18
+19

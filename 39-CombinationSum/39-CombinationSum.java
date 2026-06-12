@@ -1,4 +1,4 @@
-// Last updated: 6/12/2026, 11:41:06 AM
+// Last updated: 6/12/2026, 11:41:41 AM
 1class Solution {
 2    public List<List<Integer>> combinationSum2(int[] c, int t) {
 3        List<List<Integer>> ans = new ArrayList<>();
@@ -15,17 +15,18 @@
 14        }
 15        if(t<0) return;
 16        for(int i = s;i<c.length;i++){
-17           if (i > s && c[i] == c[i - 1]) {
-18                continue;
-19            }
-20           
-21            
-22            temp.add(c[i]);
-23            method(ans,c,t-c[i],temp,i+1);
-24            temp.remove(temp.size()-1);
-25            
-26        
+17            // if ( c[i] != c[i - 1]) {
+18            if (i > s && c[i] == c[i - 1]) {
+19                continue;
+20            }
+21           
+22            
+23            temp.add(c[i]);
+24            method(ans,c,t-c[i],temp,i+1);
+25            temp.remove(temp.size()-1);
+26            
 27        
-28    }
-29}
+28        
+29    }
 30}
+31}

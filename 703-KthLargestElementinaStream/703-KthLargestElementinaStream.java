@@ -1,45 +1,30 @@
-// Last updated: 6/28/2026, 9:23:06 PM
+// Last updated: 6/28/2026, 9:27:15 PM
 1class Solution {
-2
-3    int newColor;
-4    int oldColor;
+2    public boolean canFinish(int numCourses, int[][] prerequisites) {
+3        List<List<Integer>> adj = new ArrayList<>();
+4        for (int i = 0; i < numCourses; i++) adj.add(new ArrayList<>());
 5
-6    int[][] dir = {
-7        {-1,0},
-8        {1,0},
-9        {0,-1},
-10        {0,1}
-11    };
-12
-13    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-14
-15        newColor = color;
-16        oldColor = image[sr][sc];
-17
-18        if(oldColor != newColor){
-19            dfs(image, sr, sc);
-20        }
-21
-22        return image;
-23    }
-24
-25
-26    public void dfs(int[][] image, int r, int c){
-27
-28        if(r < 0 || c < 0 ||
-29           r >= image.length ||
-30           c >= image[0].length ||
-31           image[r][c] != oldColor){
-32
-33            return;
-34        }
-35
-36
-37        image[r][c] = newColor;
-38
-39
-40        for(int[] d : dir){
-41            dfs(image, r + d[0], c + d[1]);
-42        }
-43    }
-44}
+6        int[] indegree = new int[numCourses];
+7        for (int[] pre : prerequisites) {
+8            adj.get(pre[1]).add(pre[0]);
+9            indegree[pre[0]]++;
+10        }
+11
+12        Queue<Integer> q = new LinkedList<>();
+13        for (int i = 0; i < numCourses; i++)
+14            if (indegree[i] == 0) q.add(i);
+15
+16        int count = 0;
+17        while (!q.isEmpty()) {
+18            int node = q.poll();
+19            count++;
+20
+21            for (int next : adj.get(node)) {
+22                indegree[next]--;
+23                if (indegree[next] == 0) q.add(next);
+24            }
+25        }
+26
+27        return count == numCourses;
+28    }
+29}

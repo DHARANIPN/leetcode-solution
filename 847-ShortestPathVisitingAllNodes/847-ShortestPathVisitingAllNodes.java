@@ -1,47 +1,29 @@
-// Last updated: 6/30/2026, 9:16:28 AM
+// Last updated: 6/30/2026, 9:49:08 AM
 1class Solution {
-2    public int shortestPathLength(int[][] graph) {
-3        int n = graph.length;
-4        if (n == 1) return 0; 
-5        int r = (int) Math.pow(2, n); 
-6        int c = n;
-7        int[][] dist = new int[r][c];
+2    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+3        ListNode temp = l1;
+4        ListNode t = l2;
+5        ListNode dummy = new ListNode(0);
+6        ListNode curr = dummy;
+7        int carry = 0;
 8        
-9        for (int i = 0; i < r; i++) {
-10            Arrays.fill(dist[i], -1);
-11        }
-12        
-13        Queue<int[]> q = new LinkedList<>();
-14        for (int i = 0; i < n; i++) {
-15            int lead = i;
-16            int mask = 1 << i; 
-17            q.add(new int[]{lead, mask});
-18            dist[mask][lead] = 0;
-19        }
-20    
-21        int allVisitedMask = (1 << n) - 1;
-22        
-23        while (q.size() > 0) {
-24            int size = q.size();
-25            for (int j = 0; j < size; j++) { 
-26                int[] path = q.remove();
-27                int currLead = path[0];   
-28                int currMask = path[1];
-29                if (currMask == allVisitedMask) {
-30                    return dist[currMask][currLead];
-31                }
-32              
-33                for (int neighbor : graph[currLead]) {
-34                    int nextMask = currMask | (1 << neighbor); 
-35                    
-36                    if (dist[nextMask][neighbor] == -1) {
-37                        dist[nextMask][neighbor] = dist[currMask][currLead] + 1;
-38                        q.add(new int[]{neighbor, nextMask});
-39                    }
-40                }
-41            }
-42        }
-43        
-44        return -1;
-45    }
-46}
+9        // Fixed: Use || instead of && so it processes the longer list completely
+10        while (temp != null || t != null || carry != 0) {
+11            int sum = carry;
+12            
+13            if (temp != null) {
+14                sum += temp.val;
+15                temp = temp.next;
+16            }
+17            if (t != null) {
+18                sum += t.val;
+19                t = t.next;
+20            }
+21            
+22            carry = sum / 10;
+23            curr.next = new ListNode(sum % 10);
+24            curr = curr.next;
+25        }
+26        return dummy.next;
+27    }
+28}

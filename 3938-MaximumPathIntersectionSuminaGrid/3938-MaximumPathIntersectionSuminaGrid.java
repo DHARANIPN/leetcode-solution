@@ -1,44 +1,43 @@
-// Last updated: 7/13/2026, 8:55:00 AM
-1class Solution {
-2     int f(int []nums){
-3        int p = nums[0];
-4        int c ;
-5        int a= Integer.MIN_VALUE;
-6        for(int i =1;i<nums.length;i++){
-7            c = Math.max(p+nums[i],nums[i-1]+nums[i]);
-8            a = Math.max(a,c);
-9            p=c;
-10        }
-11        return a;
-12    }
-13    public int maxScore(int[][] grid) {
-14        int n = grid.length;
-15        int m = grid[0].length;
-16        
-17        int ans= Integer.MIN_VALUE;
-18            for(int j=0;j<n;j++){
-19                ans= Math.max(ans,f(grid[j]));
-20            }
-21        //the players may intersect at one point only , so compare all the single elements of grid..
-22        for(int i =1 ;i<n-1;i++){
-23            for(int j =1;j<m-1;j++){
-24                ans=Math.max(ans,grid[i][j]);
-25            }
-26        }
-27        
-28        // DO SAME FOR COLUMN : KADANE
-29            for(int j=0;j<m;j++){
-30               
-31                    int []arr = new int [n];
-32                 for(int i =0;i<n;i++){
-33                    arr[i]= grid[i][j];
-34                
-35            }
-36                ans= Math.max(ans,f(arr));
-37        }
-38        
-39        return ans;
-40
-41        
-42    }
-43}
+// Last updated: 7/13/2026, 8:58:57 AM
+1/**
+2 * Definition for a binary tree node.
+3 * public class TreeNode {
+4 *     int val;
+5 *     TreeNode left;
+6 *     TreeNode right;
+7 *     TreeNode() {}
+8 *     TreeNode(int val) { this.val = val; }
+9 *     TreeNode(int val, TreeNode left, TreeNode right) {
+10 *         this.val = val;
+11 *         this.left = left;
+12 *         this.right = right;
+13 *     }
+14 * }
+15 */
+16class Solution {
+17    public TreeNode invertTree(TreeNode root) {
+18       
+19        if(root==null || (root.left==null && root.right==null)){
+20            return root;
+21        }      
+22        Queue<TreeNode> q = new LinkedList<>();
+23        q.offer(root);
+24        while(!q.isEmpty()){
+25            int a = q.size();
+26            List<Integer> l = new ArrayList<>();
+27            while(a>0){
+28                TreeNode curr = q.poll();
+29                if(curr.left !=null || curr.right !=null){
+30                    TreeNode p= curr.left;
+31                    curr.left=curr.right;
+32                    curr.right=p;
+33                }
+34                if(curr.left!=null) q.offer(curr.left);
+35                if(curr.right!=null) q.offer(curr.right);
+36                a--;
+37            }
+38           
+39        }
+40        return root;
+41    }
+42}

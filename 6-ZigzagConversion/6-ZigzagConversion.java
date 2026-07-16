@@ -1,18 +1,25 @@
-// Last updated: 7/11/2026, 3:06:03 PM
+// Last updated: 7/16/2026, 8:44:36 PM
 1class Solution {
-2    public int findPeakElement(int[] nums) {
-3        int left = 0;
-4        int right = nums.length - 1;
-5
-6        while (left < right) {
-7            int mid = (left + right) / 2;
-8            if (nums[mid] > nums[mid + 1]) {
-9                right = mid;
-10            } else {
-11                left = mid + 1;
-12            }
-13        }
-14
-15        return left;        
-16    }
-17}
+2    public String convert(String s, int numRows) {
+3        if(numRows== 1 || numRows >= s.length()) {
+4            return s;
+5        }
+6        StringBuilder sb = new StringBuilder();
+7        int n = s.length();
+8        int cycle = 2 * numRows - 2;
+9        for (int i = 0; i < numRows; i++) {
+10            int j = i;
+11            while (j < n) {
+12                sb.append(s.charAt(j));
+13                if (i != 0 && i != numRows - 1) {
+14                    int midIndex = j + cycle - 2 * i;
+15                    if (midIndex < n) {
+16                        sb.append(s.charAt(midIndex));
+17                    }
+18                }
+19                j += cycle;
+20            }
+21        }
+22        return sb.toString();
+23    }
+24}

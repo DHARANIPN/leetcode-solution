@@ -1,38 +1,44 @@
-// Last updated: 7/31/2026, 8:29:24 AM
-1/*
-2// Definition for a Node.
-3class Node {
-4    int val;
-5    Node next;
-6    Node random;
-7
-8    public Node(int val) {
-9        this.val = val;
-10        this.next = null;
-11        this.random = null;
-12    }
-13}
-14*/
-15
-16public class Solution {
-17    public Node copyRandomList(Node head) {
-18        if (head == null) return null;
-19        
-20        HashMap<Node, Node> oldToNew = new HashMap<>();
-21        
-22        Node curr = head;
-23        while (curr != null) {
-24            oldToNew.put(curr, new Node(curr.val));
-25            curr = curr.next;
-26        }
-27        
-28        curr = head;
-29        while (curr != null) {
-30            oldToNew.get(curr).next = oldToNew.get(curr.next);
-31            oldToNew.get(curr).random = oldToNew.get(curr.random);
-32            curr = curr.next;
-33        }
-34        
-35        return oldToNew.get(head);
-36    }
-37}
+// Last updated: 7/31/2026, 8:30:07 AM
+1class Solution {
+2      public String countOfAtoms(String formula) {
+3        Stack<Map<String, Integer>> stack = new Stack<>();
+4        stack.push(new HashMap<>());
+5        int len = formula.length();
+6
+7        for (int i = 0; i < len; ) {
+8            if (formula.charAt(i) == '(') {
+9                stack.push(new HashMap<>());
+10                i++;
+11            } else if (formula.charAt(i) == ')') {
+12                Map<String, Integer> top = stack.pop();
+13                i++;
+14                int start = i;
+15                while (i < len && Character.isDigit(formula.charAt(i))) i++;
+16                int multiplier = start < i ? Integer.parseInt(formula.substring(start, i)) : 1;
+17                for (String key : top.keySet()) {
+18                    stack.peek().put(key, stack.peek().getOrDefault(key, 0) + top.get(key) * multiplier);
+19                }
+20            } else {
+21                int start = i;
+22                i++;
+23                while (i < len && Character.isLowerCase(formula.charAt(i))) i++;
+24                String element = formula.substring(start, i);
+25                start = i;
+26                while (i < len && Character.isDigit(formula.charAt(i))) i++;
+27                int count = start < i ? Integer.parseInt(formula.substring(start, i)) : 1;
+28                stack.peek().put(element, stack.peek().getOrDefault(element, 0) + count);
+29            }
+30        }
+31
+32        Map<String, Integer> result = stack.pop();
+33        List<String> elements = new ArrayList<>(result.keySet());
+34        Collections.sort(elements);
+35        StringBuilder sb = new StringBuilder();
+36        for (String element : elements) {
+37            sb.append(element);
+38            int count = result.get(element);
+39            if (count > 1) sb.append(count);
+40        }
+41        return sb.toString();
+42    }
+43}

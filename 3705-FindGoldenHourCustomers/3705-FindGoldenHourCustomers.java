@@ -1,49 +1,35 @@
-// Last updated: 7/31/2026, 8:34:35 AM
-1class Solution {
-2    // Defining the Project class within the Solution class
-3    private static class Project {
-4        int capital;
-5        int profit;
-6
-7        Project(int capital, int profit) {
-8            this.capital = capital;
-9            this.profit = profit;
-10        }
-11    }
-12
-13    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
-14        int n = profits.length;
-15        List<Project> projects = new ArrayList<>();
-16
-17        // Creating list of projects with capital and profits
-18        for (int i = 0; i < n; i++) {
-19            projects.add(new Project(capital[i], profits[i]));
-20        }
+// Last updated: 7/31/2026, 8:35:17 AM
+1public class Solution {
+2    public String reorganizeString(String s) {
+3        HashMap<Character, Integer> freqMap = new HashMap<>();
+4        for (char c : s.toCharArray()) {
+5            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+6        }
+7
+8        PriorityQueue<Character> maxHeap = new PriorityQueue<>((a, b) -> freqMap.get(b) - freqMap.get(a));
+9        maxHeap.addAll(freqMap.keySet());
+10
+11        StringBuilder res = new StringBuilder();
+12        while (maxHeap.size() >= 2) {
+13            char char1 = maxHeap.poll();
+14            char char2 = maxHeap.poll();
+15
+16            res.append(char1);
+17            res.append(char2);
+18
+19            freqMap.put(char1, freqMap.get(char1) - 1);
+20            freqMap.put(char2, freqMap.get(char2) - 1);
 21
-22        // Sorting projects by capital required
-23        Collections.sort(projects, (a, b) -> a.capital - b.capital);
-24
-25        // Max-heap to store profits (using a min-heap with inverted values)
-26        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((x, y) -> y - x);
-27        int i = 0;
-28
-29        // Main loop to select up to k projects
-30        for (int j = 0; j < k; j++) {
-31            // Add all profitable projects that we can afford
-32            while (i < n && projects.get(i).capital <= w) {
-33                maxHeap.add(projects.get(i).profit);
-34                i++;
-35            }
-36
-37            // If no projects can be funded, break out of the loop
-38            if (maxHeap.isEmpty()) {
-39                break;
-40            }
-41
-42            // Otherwise, take the project with the maximum profit
-43            w += maxHeap.poll();
-44        }
-45
-46        return w;
-47    }
-48}
+22            if (freqMap.get(char1) > 0) maxHeap.add(char1);
+23            if (freqMap.get(char2) > 0) maxHeap.add(char2);
+24        }
+25
+26        if (!maxHeap.isEmpty()) {
+27            char ch = maxHeap.poll();
+28            if (freqMap.get(ch) > 1) return "";
+29            res.append(ch);
+30        }
+31
+32        return res.toString();
+33    }
+34}

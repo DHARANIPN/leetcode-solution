@@ -1,26 +1,24 @@
-// Last updated: 7/31/2026, 8:32:10 AM
-1/* The isBadVersion API is defined in the parent class VersionControl.
-2      boolean isBadVersion(int version); */
-3
-4public class Solution extends VersionControl {
-5    public int firstBadVersion(int n) {
-6          int l = 1;
-7        int r = n;
-8
-9        while (l <= r) {
-10            int m = l + (r - l) / 2;
-11
-12            if (isBadVersion(m)) {
-13                // m is bad, but an earlier bad version may exist.
-14                r = m - 1;
-15            } else {
-16                // m is good, so the first bad version is after m.
-17                l = m + 1;
-18            }
-19        }
-20
-21        return l;
+// Last updated: 7/31/2026, 8:32:45 AM
+1class Solution {
+2    public int compareVersion(String version1, String version2) {
+3        int i = 0, j = 0;
+4        while (i < version1.length() || j < version2.length()) {
+5            int num1 = 0, num2 = 0;
+6            while (i < version1.length() && version1.charAt(i) != '.') {
+7                num1 = num1 * 10 + (version1.charAt(i++) - '0');
+8            }
+9            while (j < version2.length() && version2.charAt(j) != '.') {
+10                num2 = num2 * 10 + (version2.charAt(j++) - '0');
+11            }
+12            if (num1 < num2) {
+13                return -1;
+14            }
+15            if (num1 > num2) {
+16                return 1;
+17            }
+18            i++;
+19            j++;
+20        }
+21        return 0;
 22    }
 23}
-24        
-25

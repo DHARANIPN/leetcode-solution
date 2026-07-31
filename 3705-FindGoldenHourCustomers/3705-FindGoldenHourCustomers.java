@@ -1,35 +1,29 @@
-// Last updated: 7/31/2026, 8:35:17 AM
-1public class Solution {
-2    public String reorganizeString(String s) {
-3        HashMap<Character, Integer> freqMap = new HashMap<>();
-4        for (char c : s.toCharArray()) {
-5            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
-6        }
-7
-8        PriorityQueue<Character> maxHeap = new PriorityQueue<>((a, b) -> freqMap.get(b) - freqMap.get(a));
-9        maxHeap.addAll(freqMap.keySet());
-10
-11        StringBuilder res = new StringBuilder();
-12        while (maxHeap.size() >= 2) {
-13            char char1 = maxHeap.poll();
-14            char char2 = maxHeap.poll();
-15
-16            res.append(char1);
-17            res.append(char2);
+// Last updated: 7/31/2026, 8:35:51 AM
+1/**
+2 * Definition for a binary tree node.
+3 * public class TreeNode {
+4 *     int val;
+5 *     TreeNode left;
+6 *     TreeNode right;
+7 *     TreeNode() {}
+8 *     TreeNode(int val) { this.val = val; }
+9 *     TreeNode(int val, TreeNode left, TreeNode right) {
+10 *         this.val = val;
+11 *         this.left = left;
+12 *         this.right = right;
+13 *     }
+14 * }
+15 */
+16class Solution {
+17    private TreeNode prev = null;
 18
-19            freqMap.put(char1, freqMap.get(char1) - 1);
-20            freqMap.put(char2, freqMap.get(char2) - 1);
-21
-22            if (freqMap.get(char1) > 0) maxHeap.add(char1);
-23            if (freqMap.get(char2) > 0) maxHeap.add(char2);
-24        }
-25
-26        if (!maxHeap.isEmpty()) {
-27            char ch = maxHeap.poll();
-28            if (freqMap.get(ch) > 1) return "";
-29            res.append(ch);
-30        }
-31
-32        return res.toString();
-33    }
-34}
+19public void flatten(TreeNode root) {
+20    if (root == null)
+21        return;
+22    flatten(root.right);
+23    flatten(root.left);
+24    root.right = prev;
+25    root.left = null;
+26    prev = root;
+27}
+28}

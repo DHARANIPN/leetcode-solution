@@ -1,23 +1,17 @@
-// Last updated: 7/31/2026, 8:26:41 AM
+// Last updated: 7/31/2026, 8:26:58 AM
 1class Solution {
-2
-3    public void rotate(int[][] matrix) {
-4
-5        int n = matrix.length;
-6        int[][] ans = new int[n][n];
-7
-8        // Build rotated matrix
-9        for (int i = 0; i < n; i++) {
-10            for (int j = 0; j < n; j++) {
-11                ans[j][n - 1 - i] = matrix[i][j];
-12            }
-13        }
-14
-15        // Copy back
-16        for (int i = 0; i < n; i++) {
-17            for (int j = 0; j < n; j++) {
-18                matrix[i][j] = ans[i][j];
-19            }
-20        }
-21    }
-22}
+2    public String restoreString(String s, int[] indices) {
+3        
+4        int length=s.length();
+5        StringBuilder sb=new StringBuilder("");
+6         char c[]=new char[length];
+7       
+8        for(int i=0;i<length;i++){
+9
+10            c[indices[i]]=s.charAt(i);
+11
+12        }
+13        sb.append(c);
+14        return sb.toString();
+15    }
+16}

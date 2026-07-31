@@ -1,19 +1,38 @@
-// Last updated: 7/31/2026, 8:27:21 AM
-1class Solution {
-2    public boolean detectCapitalUse(String word) {
-3        if(word.length() == 0 || word.length() == 1) return true;
-4        
-5        if(Character.isUpperCase(word.charAt(0))){
-6            boolean isFirstCharacter = Character.isUpperCase(word.charAt(1));
-7            for(int i = 2; i < word.length(); i++){
-8                boolean currentCharState = Character.isUpperCase(word.charAt(i));
-9                if(currentCharState != isFirstCharacter) return false;
-10            }
-11        }else{
-12            for(int i = 1; i < word.length(); i++){
-13                if(Character.isUpperCase(word.charAt(i))) return false;
-14            }
-15        }
-16        return true;
-17    }
-18}
+// Last updated: 7/31/2026, 8:29:24 AM
+1/*
+2// Definition for a Node.
+3class Node {
+4    int val;
+5    Node next;
+6    Node random;
+7
+8    public Node(int val) {
+9        this.val = val;
+10        this.next = null;
+11        this.random = null;
+12    }
+13}
+14*/
+15
+16public class Solution {
+17    public Node copyRandomList(Node head) {
+18        if (head == null) return null;
+19        
+20        HashMap<Node, Node> oldToNew = new HashMap<>();
+21        
+22        Node curr = head;
+23        while (curr != null) {
+24            oldToNew.put(curr, new Node(curr.val));
+25            curr = curr.next;
+26        }
+27        
+28        curr = head;
+29        while (curr != null) {
+30            oldToNew.get(curr).next = oldToNew.get(curr.next);
+31            oldToNew.get(curr).random = oldToNew.get(curr.random);
+32            curr = curr.next;
+33        }
+34        
+35        return oldToNew.get(head);
+36    }
+37}
